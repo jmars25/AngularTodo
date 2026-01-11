@@ -7,4 +7,6 @@ public interface ITodoService
 {
     Task<IReadOnlyList<TodoDto>> GetTodosAsync(CancellationToken ct);
      Task<TodoDto> CreateTodoAsync(CreateTodoDto todo, CancellationToken ct); 
+
+     Task<bool> DeleteTodoAsync(DeleteTodoDto todo,CancellationToken ct);
 }

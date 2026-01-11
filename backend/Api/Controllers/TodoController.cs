@@ -32,4 +32,22 @@ public class TodoController : ControllerBase
     }
 
 
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteTodo(
+        int id,  
+        CancellationToken ct)
+    {
+        var dto = new DeleteTodoDto(id);
+        var deleted = await _service.DeleteTodoAsync(dto, ct);
+
+        if (!deleted)
+        {
+            return NotFound();  
+        }
+
+        return NoContent();  
+    }
+
+
 }

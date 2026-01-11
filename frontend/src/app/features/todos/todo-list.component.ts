@@ -15,12 +15,13 @@ export class TodoListComponent implements OnInit {
   todos: Todo[] = [];
   newTodoTitle = '';
   newTodoDescription = '';
+  selectedTodo: Todo | null = null;  // Track which todo is selected
 
   constructor(
     private todoService: TodoService,
     private router: Router,
     private todo: TodoService
-    
+
   ) {}
 
   ngOnInit(): void {
@@ -34,24 +35,26 @@ export class TodoListComponent implements OnInit {
     });
   }
 
-  /* toggleTodo(todo: Todo): void {
-    const updated = { ...todo, IsCompleted: !todo.IsCompleted };
-    this.todoService.updateTodo(todo.Id, updated).subscribe({
-      next: () => {
-        todo.IsCompleted = !todo.IsCompleted;
-      },
-      error: (err) => console.error('Error updating todo', err)
-    });
+// Select a todo when clicked
+  selectTodo(todo: Todo): void {
+    this.selectedTodo = todo;
   }
 
-  deleteTodo(id: number): void {
+  // Delete the selected todo
+  deleteSelectedTodo(): void {
+    if (!this.selectedTodo) {
+      return;
+    }
+
+    const id = this.selectedTodo.TodoID;
     this.todoService.deleteTodo(id).subscribe({
       next: () => {
-        this.todos = this.todos.filter(t => t.Id !== id);
+        this.todos = this.todos.filter(t => t.TodoID !== id);
+        this.selectedTodo = null;  
       },
       error: (err) => console.error('Error deleting todo', err)
     });
-  } */
+  }
 
 
   GoToAddTodo() {

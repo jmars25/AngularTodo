@@ -4,13 +4,13 @@ import { Observable } from 'rxjs';
 
 export interface Todo {
 
-    TodoID: number;
-    UserId: number;
-    Title: string;
-    Description: string;
-    IsCompleted: boolean;
-    CompletedAt: Date;
-    DueDate: Date;
+  TodoID: number;
+  UserId: number;
+  Title: string;
+  Description: string;
+  IsCompleted: boolean;
+  CompletedAt: Date;
+  DueDate: Date;
 }
 
 
@@ -19,12 +19,16 @@ export interface Todo {
 })
 export class TodoService {
 
-    private baseUrl = 'http://localhost:5000/api/todo'
+  private baseUrl = 'http://localhost:5000/api/todo'
 
-     constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-     getTodos(): Observable<Todo[]> {
+  getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(this.baseUrl);
+  }
+
+  deleteTodo(id: number): Observable<void> {
+    return this.http.delete<void>(`http://localhost:5000/api/todo/${id}`);
   }
 
 

@@ -50,6 +50,17 @@ public class TodoService : ITodoService
        entity.DueDate);
     }
 
+    public async Task<bool> DeleteTodoAsync(DeleteTodoDto todo, CancellationToken ct)
+    {
+
+      var rowsAffected = await _db.Todos
+        .Where(t => t.TodoID == todo.TodoID)
+        .ExecuteDeleteAsync();
+
+        return rowsAffected > 0;
+
+    }
+
 }
 
 

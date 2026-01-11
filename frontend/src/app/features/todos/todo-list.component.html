@@ -6,9 +6,15 @@
       <p>No todos yet.</p>
     </div>
 
-    <div *ngFor="let todo of todos" class="todo-item" [class.completed]="todo.IsCompleted">
+    <div *ngFor="let todo of todos"
+         class="todo-item"
+         [class.completed]="todo.IsCompleted"
+         (click)="selectTodo(todo)">
       <div class="todo-content">
-        <input type="checkbox" [checked]="todo.IsCompleted" disabled class="todo-checkbox" />
+        <input type="checkbox"
+               [checked]="selectedTodo?.TodoID === todo.TodoID"
+               class="todo-checkbox"
+               readonly />
         <div class="todo-text">
           <h3>{{ todo.Title }}</h3>
           <p *ngIf="todo.Description">{{ todo.Description }}</p>
@@ -18,10 +24,20 @@
   </div>
 
   <div class="Add-todo">
-    <button class="Add-todo-button"(click)="GoToAddTodo()">
+    <button class="Add-todo-button" (click)="GoToAddTodo()">
       Add Todo
     </button>
   </div>
+
+  <div class="Delete-todo">
+    <button class="Delete-todo-button"
+            (click)="deleteSelectedTodo()"
+            [disabled]="!selectedTodo">
+      Delete Selected Todo
+    </button>
+  </div>
+
+
   <br>
 
   <div class="todo-stats">
