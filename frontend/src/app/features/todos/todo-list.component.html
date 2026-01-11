@@ -1,0 +1,30 @@
+<div class="todo-container">
+  <h1>My Todos</h1>
+
+  <div class="todo-list">
+    <div *ngIf="todos.length === 0" class="empty-state">
+      <p>No todos yet.</p>
+    </div>
+
+    <div *ngFor="let todo of todos" class="todo-item" [class.completed]="todo.IsCompleted">
+      <div class="todo-content">
+        <input type="checkbox" [checked]="todo.IsCompleted" disabled class="todo-checkbox" />
+        <div class="todo-text">
+          <h3>{{ todo.Title }}</h3>
+          <p *ngIf="todo.Description">{{ todo.Description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="Add-todo">
+    <button class="Add-todo-button"(click)="GoToAddTodo()">
+      Add Todo
+    </button>
+  </div>
+  <br>
+
+  <div class="todo-stats">
+    <p>{{ activeTodosCount }} items left</p>
+  </div>
+</div>
