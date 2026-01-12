@@ -61,6 +61,17 @@ public class TodoService : ITodoService
 
     }
 
+    public async Task<bool> UpdateTodoAsync(UpdateTodoDto dto, CancellationToken ct)
+    {
+        var rowsAffected = await _db.Todos
+            .Where(t => t.TodoID == dto.TodoID)
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(t => t.IsCompleted, dto.IsCompleted) 
+            , ct);
+
+        return rowsAffected > 0;
+    }
+
 }
 
 

@@ -31,6 +31,12 @@ export class TodoService {
     return this.http.delete<void>(`http://localhost:5000/api/todo/${id}`);
   }
 
-
+  updateTodo(todoId: number, isCompleted: boolean): Observable<void> {
+    const body = {
+      TodoID: todoId,        // Capital D to match backend
+      IsCompleted: isCompleted
+    };
+    return this.http.post<void>(`${this.baseUrl}/UpdateTodo`, body);
+  }
 
 }

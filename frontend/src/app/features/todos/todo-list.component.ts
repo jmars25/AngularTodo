@@ -19,10 +19,8 @@ export class TodoListComponent implements OnInit {
 
   constructor(
     private todoService: TodoService,
-    private router: Router,
-    private todo: TodoService
-
-  ) {}
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadTodos();
@@ -35,7 +33,7 @@ export class TodoListComponent implements OnInit {
     });
   }
 
-// Select a todo when clicked
+  // Select a todo when clicked
   selectTodo(todo: Todo): void {
     this.selectedTodo = todo;
   }
@@ -50,9 +48,30 @@ export class TodoListComponent implements OnInit {
     this.todoService.deleteTodo(id).subscribe({
       next: () => {
         this.todos = this.todos.filter(t => t.TodoID !== id);
-        this.selectedTodo = null;  
+        this.selectedTodo = null;
       },
       error: (err) => console.error('Error deleting todo', err)
+    });
+  }
+
+  UpdateTodo(): void {
+    if (!this.selectedTodo) {
+      return;
+    }
+
+    const id = this.selectedTodo.TodoID;
+    const newStatus = !this.selectedTodo.IsCompleted;  
+
+    this.todoService.updateTodo(id, newStatus).subscribe({
+      next: () => {
+       
+        const todo = this.todos.find(t => t.TodoID === id);
+        if (todo) {
+          todo.IsCompleted = newStatus;
+        }
+        this.selectedTodo = null;  // Clear selection
+      },
+      error: (err) => console.error('Error updating todo', err)
     });
   }
 

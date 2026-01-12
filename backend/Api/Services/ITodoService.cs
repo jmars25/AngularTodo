@@ -9,4 +9,6 @@ public interface ITodoService
      Task<TodoDto> CreateTodoAsync(CreateTodoDto todo, CancellationToken ct); 
 
      Task<bool> DeleteTodoAsync(DeleteTodoDto todo,CancellationToken ct);
+
+     Task<bool> UpdateTodoAsync(UpdateTodoDto dto, CancellationToken ct);
 }

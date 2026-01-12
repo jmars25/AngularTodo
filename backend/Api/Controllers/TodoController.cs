@@ -35,7 +35,7 @@ public class TodoController : ControllerBase
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteTodo(
-        int id,  
+        int id,
         CancellationToken ct)
     {
         var dto = new DeleteTodoDto(id);
@@ -43,11 +43,28 @@ public class TodoController : ControllerBase
 
         if (!deleted)
         {
-            return NotFound();  
+            return NotFound();
         }
 
-        return NoContent();  
+        return NoContent();
     }
 
+    [HttpPost("UpdateTodo")]
+    public async Task<ActionResult<TodoDto>> UpdateTodo(
+        [FromBody] UpdateTodoDto dto,
+        CancellationToken ct)
+    {
+
+        var TodoUpdated = await _service.UpdateTodoAsync(dto, ct);
+
+        if (!TodoUpdated)
+        {
+            
+            return NotFound();
+        }
+        return NoContent();
+
+
+    }
 
 }
